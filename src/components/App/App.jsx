@@ -7,10 +7,14 @@ import Home from '../Home/Home';
 
 export default function App() {
   const [gameInstance, setGameInstance] = useState([]);
+  const [score, setScore] = useState(0);
 
   return (
     <GameContext.Provider value={{
-      gameInstance, setGameInstance
+      gameInstance,
+      setGameInstance,
+      score,
+      setScore
     }}>
        <BrowserRouter>
         <Routes>

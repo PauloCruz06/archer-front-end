@@ -1,12 +1,11 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GameContext from '../../contexts/GameContext';
 import reactLogo from '../../assets/react.svg';
 import './Home.css';
 
 export default function Home() {
-    const [count, setCount] = useState(0);
-    const { setGameInstance } = useContext(GameContext);
+    const { score, setGameInstance, setScore } = useContext(GameContext);
     const navigate = useNavigate();
     
     function goMenu() {
@@ -26,8 +25,8 @@ export default function Home() {
         </div>
         <h1>Vite + React</h1>
         <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
+          <button onClick={() => setScore((score) => score + 1)}>
+            score is {score}
           </button>
           <button onClick={goMenu}>
             Link to game 
