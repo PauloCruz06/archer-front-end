@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import GameContext from '../../contexts/GameContext';
-import Main from '../Game/Main';
 import Home from '../Home/Home';
+import Main from '../Game/Scenes/Main';
+import Ranking from '../Game/Scenes/Ranking';
 
 export default function App() {
   const [gameInstance, setGameInstance] = useState([]);
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/menu' element={<Main />} />
+          <Route path='/ranking' element={<Ranking />} />
         </Routes>
       </BrowserRouter>
     </GameContext.Provider>
