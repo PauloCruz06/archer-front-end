@@ -2,10 +2,10 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Phaser from "phaser";
 import GameContext from '../../../contexts/GameContext';
-import styled from 'styled-components';
 
-import skyImg from  "../../../assets/phaser/sky.png";
+import jungleImg from  "../../../assets/phaser/background/jungle.jpg";
 import starImg from "../../../assets/phaser/star.png";
+import { Div, SceneContainer } from './SceneConteinerStyle';
 
 export default function Ranking() {
     const { gameInstance, setGameInstance } = useContext(GameContext);
@@ -17,15 +17,16 @@ export default function Ranking() {
         }
     
         preload() {
-            this.load.image('sky', skyImg);
+            this.load.image('jungle', jungleImg);
             this.load.spritesheet('star', starImg, {frameWidth: 24, frameHeight: 24});
         }
     
         create() {
-            const backgroundImg = this.add.image(0, 0, 'sky');
+            const backgroundImg = this.add.image(0, 0, 'jungle');
             const star = this.add.sprite(650, 150, 'star').setInteractive();
     
             backgroundImg.setOrigin(0, 0);
+            backgroundImg.scale = 1.9;
     
             star.on('pointerdown', () => {
                 goMenu();
@@ -44,8 +45,8 @@ export default function Ranking() {
         const game = new Phaser.Game({
             type: Phaser.AUTO,
             parent: 'rankingScene-container',
-            width: 800,
-            height: 600,
+            width: 1200,
+            height: 900,
             scene: [rankingScene]
         });
 
@@ -58,15 +59,3 @@ export default function Ranking() {
         </Div>
     )
 }
-
-const Div = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: aquamarine;
-`
-
-const SceneContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-`

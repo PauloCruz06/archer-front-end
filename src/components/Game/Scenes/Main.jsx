@@ -2,11 +2,13 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Phaser from "phaser";
 import GameContext from '../../../contexts/GameContext';
-import styled from 'styled-components';
 
-import logoImg from "../../../assets/phaser/logo.png";
 import starImg from "../../../assets/phaser/star.png";
 import bombImg from "../../../assets/phaser/bomb.png";
+import menuBack from "../../../assets/phaser/background/menu_background.jpg";
+import headerBack from "../../../assets/phaser/background/page_header.png";
+import footerBack from "../../../assets/phaser/background/page_footer.png";
+import { Div, SceneContainer } from './SceneConteinerStyle';
 
 export default function Main() {
     const { gameInstance, score, setGameInstance, setScore } = useContext(GameContext);
@@ -18,14 +20,18 @@ export default function Main() {
         }
     
         preload() {
-            this.load.image('logo', logoImg);
+            this.load.image('menu', menuBack);
+            this.load.image('header', headerBack);
+            this.load.image('footer', footerBack);
             this.load.spritesheet('star', starImg, {frameWidth: 24, frameHeight: 24});
             this.load.spritesheet('bomb', bombImg, {frameWidth: 24, frameHeight: 24});
         }
           
         create() {
             let currentScore = score;
-            const logo = this.add.image(400, 150, 'logo');
+            const backgroundImg = this.add.image(0, 180, 'menu');
+            const headerImg = this.add.image(0, 0, 'header');
+            const footerImg = this.add.image(0, 840, 'footer');
             const star = this.add.sprite(650, 150, 'star').setInteractive();
             const bomb = this.add.sprite(650, 450, 'bomb').setInteractive();
             let scoreText = this.add.text(
@@ -34,15 +40,14 @@ export default function Main() {
                 `Score: ${currentScore}`,
                 { fontSize: '16px Courier', fill: '#00ff00' }
             );
+
+            backgroundImg.setOrigin(0, 0);
+            headerImg.setOrigin(0,0);
+            footerImg.setOrigin(0,0);
+            backgroundImg.scale = 1.875;
+            headerImg.scale = 1.875;
+            footerImg.scale = 1.875;
           
-            this.tweens.add({
-                targets: logo,
-                y: 450,
-                duration: 2000,
-                ease: "Power2",
-                yoyo: true,
-                loop: -1
-            });
     
             star.on('pointerdown', () => {
                 goRanking(currentScore);
@@ -75,8 +80,8 @@ export default function Main() {
         const game = new Phaser.Game({
             type: Phaser.AUTO,
             parent: 'mainScene-container',
-            width: 800,
-            height: 600,
+            width: 1200,
+            height: 900,
             scene: [mainScene]
         });
 
@@ -90,15 +95,3 @@ export default function Main() {
         </Div>
     )
 }
-
-const Div = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: aquamarine;
-`
-
-const SceneContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-`
