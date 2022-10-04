@@ -5,6 +5,7 @@ import GameContext from '../../contexts/GameContext';
 import Home from '../Home/Home';
 import Main from '../Game/Scenes/Main';
 import Ranking from '../Game/Scenes/Ranking';
+import Game from '../Game/Scenes/Game';
 
 export default function App() {
   const [gameInstance, setGameInstance] = useState([]);
@@ -22,6 +23,7 @@ export default function App() {
           <Route path='/' element={<Home />} />
           <Route path='/menu' element={<Main />} />
           <Route path='/ranking' element={<Ranking />} />
+          <Route path='/game' element={<Game />} />
         </Routes>
       </BrowserRouter>
     </GameContext.Provider>

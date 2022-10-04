@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Phaser from "phaser";
 import GameContext from '../../../contexts/GameContext';
 
-import starImg from "../../../assets/phaser/star.png";
-import bombImg from "../../../assets/phaser/bomb.png";
 import menuBack from "../../../assets/phaser/background/menu_background.jpg";
 import headerBack from "../../../assets/phaser/background/page_header.png";
 import footerBack from "../../../assets/phaser/background/page_footer.png";
+import startTile from "../../../assets/phaser/tiles/startButton.png";
+import rankingTile from "../../../assets/phaser/tiles/rankingButton.png";
+import optionsTile from "../../../assets/phaser/tiles/optionsButton.png";
 import { Div, SceneContainer } from './SceneConteinerStyle';
 
 export default function Main() {
@@ -23,8 +24,9 @@ export default function Main() {
             this.load.image('menu', menuBack);
             this.load.image('header', headerBack);
             this.load.image('footer', footerBack);
-            this.load.spritesheet('star', starImg, {frameWidth: 24, frameHeight: 24});
-            this.load.spritesheet('bomb', bombImg, {frameWidth: 24, frameHeight: 24});
+            this.load.spritesheet('start', startTile, {frameWidth: 121, frameHeight: 37});
+            this.load.spritesheet('ranking', rankingTile, {frameWidth: 121, frameHeight: 37});
+            this.load.spritesheet('options', optionsTile, {frameWidth: 121, frameHeight: 37});
         }
           
         create() {
@@ -32,8 +34,9 @@ export default function Main() {
             const backgroundImg = this.add.image(0, 180, 'menu');
             const headerImg = this.add.image(0, 0, 'header');
             const footerImg = this.add.image(0, 840, 'footer');
-            const star = this.add.sprite(650, 150, 'star').setInteractive();
-            const bomb = this.add.sprite(650, 450, 'bomb').setInteractive();
+            let start = this.add.sprite(600, 500, 'start').setInteractive();
+            let ranking = this.add.sprite(600, 581, 'ranking').setInteractive();
+            let options = this.add.sprite(600, 662, 'options').setInteractive();
             let scoreText = this.add.text(
                 10,
                 10,
@@ -47,15 +50,43 @@ export default function Main() {
             backgroundImg.scale = 1.875;
             headerImg.scale = 1.875;
             footerImg.scale = 1.875;
+            start.scale = 2;
+            ranking.scale = 2;
+            options.scale = 2;
           
-    
-            star.on('pointerdown', () => {
+            start.on('pointerover', () => {
+                start.setTint(0x00ff00);
+            });
+            start.on('pointerout', () => {
+                start.clearTint();
+            });
+            start.on('pointerdown', () => {
+                startGame();
+            });
+
+            ranking.on('pointerover', () => {
+                ranking.setTint(0x00ff00);
+            });
+            ranking.on('pointerout', () => {
+                ranking.clearTint();
+            });
+            ranking.on('pointerdown', () => {
                 goRanking(currentScore);
             });
-    
-            bomb.on('pointerdown', () => {
+
+            options.on('pointerover', () => {
+                options.setTint(0x00ff00);
+            });
+            options.on('pointerout', () => {
+                options.clearTint();
+            });
+            options.on('pointerdown', () => {
                 updateScore(currentScore, scoreText);
             });
+        }
+
+        update() {
+
         }
     }
     
@@ -68,6 +99,11 @@ export default function Main() {
     function goRanking(currentScore) {
         setGameInstance([]);
         navigate('/ranking');
+    }
+
+    function startGame() {
+        setGameInstance([]);
+        navigate('/game');
     }
 
     function goHome() {
